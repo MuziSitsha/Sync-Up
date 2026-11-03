@@ -16,7 +16,14 @@ A web app for couples to stay in each other's loop through the day — moods, li
 
 ## 3. Current status
 
-A working v1 exists as a single-file prototype (moods, status thread, day plans, weekend planner, verse of the day, driving with live location on OpenStreetMap). It currently runs without accounts — anyone with the link can open it. This spec covers what comes next.
+Build order steps 1 to 4 are done (November 2026):
+
+- **Accounts & auth:** real email/password accounts on Supabase, with the joint couple setup and a single-use invite code/link for the second partner.
+- **Real backend:** per-couple tables, live sync between phones, full history kept, photos in private storage. Privacy is enforced by row level security in the database.
+- **Driving auto-stop:** destination lookup (Nominatim), ETA, and auto-stop within an arrival radius, for car, Uber/Bolt, Gautrain and taxi/bus.
+- **Free feature pass:** journaling (private until both have written), photo drop, streaks, countdown banner, reactions, plus "thinking of you" and a shareable weekly recap.
+
+Still open: custom SMTP for email confirmation and password reset (see the README), the design pass, ads, and launch.
 
 ## 4. Screens / information architecture
 
@@ -109,6 +116,6 @@ A working v1 exists as a single-file prototype (moods, status thread, day plans,
 
 ## 10. Open decisions
 
-- Journaling: fully shared entries, or private-then-unlock?
+- ~~Journaling: fully shared entries, or private-then-unlock?~~ Decided: private-then-unlock, enforced by the database.
 - Daily ritual beyond the verse: leaning toward "question of the day" with a reveal-once-both-answer mechanic — needs a final call
 - Notifications: push (needs more backend work) vs. check-when-you-open-it for now

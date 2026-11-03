@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFF8F0">
+<title>Sync Up</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<div id="setup-screen">
+  <div class="setup-card fade-in" id="setup-card">
+    <div class="wordmark"><span class="glyph"></span><h1 id="setup-title">Sync Up</h1></div>
+    <p class="sub" id="setup-sub">A shared thread through your day — moods, plans, and check-ins, just the two of you.</p>
+    <div id="setup-body"></div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="nav-sticky">
+    <div class="nav-inner">
+      <div class="brand"><span class="glyph"></span><h1>Sync Up</h1></div>
+      <div class="navlinks">
+        <a href="#today">Today</a><a href="#journal">Journal</a><a href="#photos">Photos</a>
+        <a href="#driving">On The Way</a><a href="#plans">Plans</a><a href="#weekend">Weekend</a><a href="#history">History</a>
+      </div>
+      <button class="whoami" id="whoami-btn"><span class="dot" id="whoami-dot"></span><span id="whoami-label"></span></button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="greet" id="greet"></div>
+    <div class="sub" id="names-label"></div>
+    <div class="pill-row" id="pill-row"></div>
+    <div class="pill-row" style="margin-top:10px;"><button class="toy-btn" id="toy-btn">💛 Thinking of you</button></div>
+  </div>
+
+  <main>
+    <section id="today">
+      <div class="section-head"><h2>How you're both doing</h2><span class="eyebrow">tap yours to update</span></div>
+      <div class="mood-grid" id="mood-grid"></div>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>Keep each other posted</h2><span class="eyebrow">quick status</span></div>
+      <div class="card">
+        <div class="composer" id="quick-chips"></div>
+        <div class="composer-row">
+          <input type="text" id="custom-update" placeholder="Say what's going on…" maxlength="140">
+          <button class="btn" id="send-update">Post</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>Today's thread</h2><span class="eyebrow" id="thread-count"></span></div>
+      <div class="card"><div class="thread" id="thread"></div></div>
+    </section>
+
+    <section id="journal">
+      <div class="section-head"><h2>Joint journal</h2><span class="eyebrow">unlocks once you've both written</span></div>
+      <div class="card"><div class="journal-grid" id="journal-grid"></div></div>
+    </section>
+
+    <section id="photos">
+      <div class="section-head"><h2>Today's photo drop</h2><span class="eyebrow">one each, side by side</span></div>
+      <div class="card"><div class="photo-grid" id="photo-grid"></div></div>
+    </section>
+
+    <section id="driving">
+      <div class="section-head"><h2>On The Way</h2><span class="eyebrow">share the route, any way you're getting there</span></div>
+      <div class="card">
+        <div class="drive-status" id="drive-status"></div>
+        <div id="drive-controls"></div>
+        <div id="map"></div>
+        <div class="geo-note">Uses your browser's location, free OpenStreetMap tiles. Auto-stops sharing once you're near your destination — the arrival radius is a bit wider for Gautrain/taxi since stations and stops cover more ground. ETA is a rough estimate, not a routed time.</div>
+      </div>
+    </section>
+
+    <section id="plans">
+      <div class="section-head"><h2>Day plans</h2><span class="eyebrow">so no one's guessing</span></div>
+      <div class="card"><div class="sched-cols" id="sched-cols"></div></div>
+    </section>
+
+    <section id="weekend">
+      <div class="section-head"><h2>Weekend</h2><span class="eyebrow">plan a date, skip the calendar</span></div>
+      <div class="card">
+        <div id="dates-list"></div>
+        <div class="add-row" style="margin-top:14px;">
+          <input type="text" id="date-title" placeholder="What are we doing?">
+          <input type="date" id="date-date">
+          <input type="time" id="date-time">
+          <button class="icon-btn" id="add-date">+</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>Verse of the day</h2><span class="eyebrow" id="verse-date"></span></div>
+      <div class="verse-card"><div class="v" id="verse-text"></div><div class="ref" id="verse-ref"></div></div>
+    </section>
+
+    <section id="history">
+      <div class="section-head"><h2>History</h2><span class="eyebrow">every day, kept</span></div>
+      <div class="card recap-card">
+        <div class="recap-head"><h3>Share your week</h3><span class="eyebrow">a little something for your status</span></div>
+        <div id="recap-preview"></div>
+        <div class="recap-actions">
+          <button class="btn" id="recap-generate">Generate this week's recap</button>
+          <button class="btn btn-ghost" id="recap-share" style="display:none;">Share</button>
+          <button class="btn btn-ghost" id="recap-download" style="display:none;">Download</button>
+        </div>
+      </div>
+      <div class="card"><div id="history-list"></div></div>
+    </section>
+  </main>
+
+  <footer class="foot">just the two of you · synced live across your phones</footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/db.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
