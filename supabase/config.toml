@@ -2,6 +2,11 @@
 # `npx supabase config push`. Everything else keeps Supabase's defaults.
 project_id = "Sync-Up"
 
+[auth]
+# Where links in auth emails (confirmation, password reset) send people.
+site_url = "https://sync-up-navy.vercel.app"
+additional_redirect_urls = ["http://localhost:8000", "http://127.0.0.1:8000"]
+
 [auth.email]
 # Supabase's built-in email service only delivers to your Supabase team members,
 # so sign-ups go straight in without a confirmation email. Turn this back on once a
